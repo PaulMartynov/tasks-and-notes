@@ -13,11 +13,10 @@ export default function TabTwoScreen({ navigation }: RootTabScreenProps<'TabOne'
       <Pressable
         onPress={() => navigation.navigate('Modal')}
         style={({ pressed }) => ({
+          ...TabStyles.addBtn,
           opacity: pressed ? 0.85 : 1,
         })}>
-        <View style={TabStyles.addBtn}>
-          <MaterialIcons name="add" size={36} color="black" />
-        </View>
+        <MaterialIcons name="add" size={36} color="black" />
       </Pressable>
     </View>
   );

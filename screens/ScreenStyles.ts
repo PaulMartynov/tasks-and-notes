@@ -18,6 +18,7 @@ export const TabStyles = StyleSheet.create({
   addBtn: {
     width: 72,
     height: 72,
+    backgroundColor: "#fff",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 50,
@@ -29,7 +30,7 @@ export const TabStyles = StyleSheet.create({
     right: 24,
     elevation: 3,
     shadowColor: "black",
-    shadowRadius: 10,
+    shadowRadius: 50,
     shadowOpacity: 0.5,
     shadowOffset: { width: 0, height: 2},
   }
