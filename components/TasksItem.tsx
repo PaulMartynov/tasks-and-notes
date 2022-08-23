@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   itemContainer: {
     justifyContent: "center",
     padding: 10,
-    height: 60,
+    height: 72,
     marginVertical: 2,
     marginHorizontal: 2,
     borderWidth: 1,
