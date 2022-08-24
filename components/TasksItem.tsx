@@ -1,8 +1,7 @@
 import { StyleSheet } from "react-native";
 
 import React from "react";
-import { Text, View } from './Themed';
-
+import { Text, View } from "./Themed";
 
 type TasksItemProps = {
   id: string;
@@ -14,7 +13,7 @@ export default function TasksItem({ id, title }: TasksItemProps): JSX.Element {
     <View style={styles.itemContainer}>
       <Text>{`task #${id} ${title}`}</Text>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -28,5 +27,5 @@ const styles = StyleSheet.create({
     borderColor: "#000",
     borderStyle: "solid",
     borderRadius: 3,
-  }
+  },
 });

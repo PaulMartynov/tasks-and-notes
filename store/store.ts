@@ -2,8 +2,11 @@ import { makeObservable, observable, action } from "mobx";
 
 class Store {
   activeTask: Task | null = null;
+
   activeNote: Note | null = null;
+
   notes: Note[] = [];
+
   tasks: Task[] = [
     { id: "1", title: "---", checkList: [] },
     { id: "2", title: "---", checkList: [] },
@@ -36,17 +39,21 @@ class Store {
       setActiveNote: action,
       deleteTask: action,
       deleteNote: action,
-    })
+    });
   }
+
   setActiveTask(task: Task) {
     this.activeTask = task;
   }
+
   setActiveNote(note: Note) {
     this.activeNote = note;
   }
+
   deleteTask(id: string) {
     this.tasks = this.tasks.filter((t) => t.id !== id);
   }
+
   deleteNote(id: string) {
     this.notes = this.notes.filter((n) => n.id !== id);
   }

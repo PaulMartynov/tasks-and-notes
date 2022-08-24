@@ -8,12 +8,12 @@ export const TabStyles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
+    width: "80%",
   },
   addBtn: {
     width: 72,
@@ -25,13 +25,13 @@ export const TabStyles = StyleSheet.create({
     borderStyle: "solid",
     borderWidth: 1,
     borderColor: "black",
-    position: 'absolute',
+    position: "absolute",
     bottom: 24,
     right: 24,
     elevation: 3,
     shadowColor: "black",
     shadowRadius: 50,
     shadowOpacity: 0.5,
-    shadowOffset: { width: 0, height: 2},
-  }
+    shadowOffset: { width: 0, height: 2 },
+  },
 });
