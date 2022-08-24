@@ -11,14 +11,18 @@ class Notes {
     makeObservable(this, {
       activeNote: observable,
       notes: observable,
-      createNote: action,
+      updateNote: action,
       setActiveNote: action,
       deleteNote: action,
     });
   }
 
-  createNote(note: Note) {
-    this.notes = [note, ...this.notes];
+  updateNote(note: Note) {
+    if (this.isNew) {
+      this.notes = [note, ...this.notes];
+      return;
+    }
+    this.notes = [note, ...this.notes.filter((n) => n.id !== note.id)];
   }
 
   setActiveNote(note: Note | null, isNew = false) {
@@ -27,6 +31,10 @@ class Notes {
   }
 
   deleteNote(id: string) {
+    if (this.isNew) {
+      this.activeNote = null;
+      return;
+    }
     this.notes = this.notes.filter((n) => n.id !== id);
   }
 }

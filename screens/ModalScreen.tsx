@@ -6,22 +6,28 @@ import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import notes from "../store/notes";
 import tasks from "../store/tasks";
+import { MonoText } from "../components/StyledText";
+import NoteView from "../components/NoteView";
 
 const ModalScreen = observer(({ navigation }: RootTabScreenProps<"Modal">) => {
+  const saveNote = (note: Note) => {
+    notes.updateNote(note);
+    navigation.navigate("TabTwo");
+  };
+  const deleteNote = (id: string) => {
+    notes.deleteNote(id);
+    navigation.navigate("TabTwo");
+  };
   return (
     <View style={styles.container}>
       {notes.activeNote && (
-        <>
-          <Text style={styles.title}>{notes.activeNote.title}</Text>
-          <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          />
-        </>
+        <NoteView note={notes.activeNote} save={saveNote} remove={deleteNote} />
       )}
       {tasks.activeTask && (
         <>
+          <View style={styles.subtitle}>
+            <MonoText>{`#${tasks.activeTask.id}`}</MonoText>
+          </View>
           <Text style={styles.title}>{tasks.activeTask.title}</Text>
           <View
             style={styles.separator}
@@ -56,6 +62,7 @@ const ModalScreen = observer(({ navigation }: RootTabScreenProps<"Modal">) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#fff",
   },
   title: {
     padding: 20,
@@ -63,8 +70,12 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
+  subtitle: {
+    padding: 10,
+    textAlign: "center",
+  },
   separator: {
-    marginVertical: 30,
+    marginVertical: 10,
     height: 1,
     width: "80%",
   },
