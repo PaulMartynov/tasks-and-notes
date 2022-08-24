@@ -1,23 +1,38 @@
-import { StyleSheet } from "react-native";
+import { Pressable, StyleSheet } from "react-native";
 
 import React from "react";
-import { Text, View } from "./Themed";
+import { Text } from "./Themed";
 
 type TasksItemProps = {
   id: string;
   title: string;
+  onPress: (id: string) => void;
 };
 
-export default function TasksItem({ id, title }: TasksItemProps): JSX.Element {
+export default function TasksItem({
+  id,
+  title,
+  onPress,
+}: TasksItemProps): JSX.Element {
+  const selectItem = () => {
+    onPress(id);
+  };
   return (
-    <View style={styles.itemContainer}>
-      <Text>{`task #${id} ${title}`}</Text>
-    </View>
+    <Pressable
+      onPress={selectItem}
+      style={({ pressed }) => ({
+        ...styles.itemContainer,
+        opacity: pressed ? 0.5 : 1,
+      })}
+    >
+      <Text>{`#${id} ${title}`}</Text>
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   itemContainer: {
+    backgroundColor: "#fff",
     justifyContent: "center",
     padding: 10,
     height: 72,

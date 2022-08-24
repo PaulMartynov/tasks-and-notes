@@ -1,26 +1,50 @@
-import { FlatList, Pressable } from "react-native";
+import { FlatList } from "react-native";
+import { observer } from "mobx-react-lite";
 
-import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { TabStyles } from "./ScreenStyles";
+import notesStore from "../store/notes";
+import tasksStore from "../store/tasks";
+import TasksItem from "../components/TasksItem";
+import AddButton from "../components/AddButton";
 
-export default function TabTwoScreen({
-  navigation,
-}: RootTabScreenProps<"TabOne">) {
-  return (
-    <View style={TabStyles.container}>
-      <FlatList data={[]} renderItem={(item) => <Text>{""}</Text>} />
-      <Pressable
-        onPress={() => navigation.navigate("Modal")}
-        style={({ pressed }) => ({
-          ...TabStyles.addBtn,
-          opacity: pressed ? 0.85 : 1,
-        })}
-      >
-        <MaterialIcons name="add" size={36} color="black" />
-      </Pressable>
-    </View>
-  );
-}
+const TabTwoScreen = observer(
+  ({ navigation }: RootTabScreenProps<"TabOne">) => {
+    const selectNote = (id: string) => {
+      const note = notesStore.notes.find((n) => n.id === id);
+      if (note) {
+        tasksStore.setActiveTask(null);
+        notesStore.setActiveNote(note);
+        navigation.navigate("Modal");
+      }
+    };
+    const addNote = () => {
+      tasksStore.setActiveTask(null);
+      notesStore.setActiveNote(
+        {
+          id: `${Date.now()}`,
+          title: "New note",
+          text: "",
+        },
+        true
+      );
+      navigation.navigate("Modal");
+    };
+    return (
+      <View style={TabStyles.container}>
+        <FlatList
+          data={notesStore.notes}
+          renderItem={({ item }) => (
+            <TasksItem id={item.id} title={item.title} onPress={selectNote} />
+          )}
+          keyExtractor={(item) => item.id}
+        />
+        <AddButton onPress={addNote} />
+      </View>
+    );
+  }
+);
+
+export default TabTwoScreen;

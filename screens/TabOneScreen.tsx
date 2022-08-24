@@ -1,35 +1,47 @@
-import { FlatList, Pressable } from "react-native";
+import { FlatList } from "react-native";
 import { observer } from "mobx-react-lite";
 
-import { MaterialIcons } from "@expo/vector-icons";
 import * as React from "react";
 import { View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import { TabStyles } from "./ScreenStyles";
-import store from "../store/store";
+import tasksStore from "../store/tasks";
+import notesStore from "../store/notes";
 import TasksItem from "../components/TasksItem";
+import AddButton from "../components/AddButton";
 
 const TabOneScreen = observer(
   ({ navigation }: RootTabScreenProps<"TabOne">) => {
-    const { tasks } = store;
+    const selectTask = (id: string) => {
+      const task = tasksStore.tasks.find((t) => t.id === id);
+      if (task) {
+        notesStore.setActiveNote(null);
+        tasksStore.setActiveTask(task);
+        navigation.navigate("Modal");
+      }
+    };
+    const addTask = () => {
+      notesStore.setActiveNote(null);
+      tasksStore.setActiveTask(
+        {
+          id: `${Date.now()}`,
+          title: "New task",
+          checkList: [],
+        },
+        true
+      );
+      navigation.navigate("Modal");
+    };
     return (
       <View style={TabStyles.container}>
         <FlatList
-          data={tasks}
+          data={tasksStore.tasks}
           renderItem={({ item }) => (
-            <TasksItem id={item.id} title={item.title} />
+            <TasksItem id={item.id} title={item.title} onPress={selectTask} />
           )}
           keyExtractor={(item) => item.id}
         />
-        <Pressable
-          onPress={() => navigation.navigate("Modal")}
-          style={({ pressed }) => ({
-            ...TabStyles.addBtn,
-            opacity: pressed ? 0.85 : 1,
-          })}
-        >
-          <MaterialIcons name="add" size={36} color="black" />
-        </Pressable>
+        <AddButton onPress={addTask} />
       </View>
     );
   }
