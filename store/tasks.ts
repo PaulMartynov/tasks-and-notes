@@ -11,14 +11,18 @@ class Tasks {
     makeObservable(this, {
       activeTask: observable,
       tasks: observable,
-      createTask: action,
+      updateTask: action,
       setActiveTask: action,
       deleteTask: action,
     });
   }
 
-  createTask(task: Task) {
-    this.tasks = [task, ...this.tasks];
+  updateTask(task: Task) {
+    if (this.isNew) {
+      this.tasks = [task, ...this.tasks];
+      return;
+    }
+    this.tasks = [task, ...this.tasks.filter((t) => t.id !== task.id)];
   }
 
   setActiveTask(task: Task | null, isNew = false) {

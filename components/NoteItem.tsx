@@ -9,7 +9,7 @@ type TasksItemProps = {
   onPress: (id: string) => void;
 };
 
-export default function TasksItem({
+export default function NoteItem({
   id,
   title,
   onPress,
@@ -25,7 +25,7 @@ export default function TasksItem({
         opacity: pressed ? 0.5 : 1,
       })}
     >
-      <Text>{`#${id} ${title}`}</Text>
+      <Text style={styles.itemText}>{`${title}`}</Text>
     </Pressable>
   );
 }
@@ -39,8 +39,13 @@ const styles = StyleSheet.create({
     marginVertical: 2,
     marginHorizontal: 2,
     borderWidth: 1,
-    borderColor: "#000",
+    borderColor: "gray",
     borderStyle: "solid",
     borderRadius: 3,
+    overflow: "hidden",
+  },
+  itemText: {
+    fontWeight: "bold",
+    fontSize: 18,
   },
 });

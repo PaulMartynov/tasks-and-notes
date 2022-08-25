@@ -7,7 +7,7 @@ import { RootTabScreenProps } from "../types";
 import { TabStyles } from "./ScreenStyles";
 import tasksStore from "../store/tasks";
 import notesStore from "../store/notes";
-import TasksItem from "../components/TasksItem";
+import NoteItem from "../components/NoteItem";
 import AddButton from "../components/AddButton";
 
 const TabOneScreen = observer(
@@ -27,6 +27,7 @@ const TabOneScreen = observer(
           id: `${Date.now()}`,
           title: "New task",
           checkList: [],
+          completed: false,
         },
         true
       );
@@ -37,7 +38,7 @@ const TabOneScreen = observer(
         <FlatList
           data={tasksStore.tasks}
           renderItem={({ item }) => (
-            <TasksItem id={item.id} title={item.title} onPress={selectTask} />
+            <NoteItem id={item.id} title={item.title} onPress={selectTask} />
           )}
           keyExtractor={(item) => item.id}
         />

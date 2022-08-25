@@ -7,7 +7,7 @@ import { RootTabScreenProps } from "../types";
 import { TabStyles } from "./ScreenStyles";
 import notesStore from "../store/notes";
 import tasksStore from "../store/tasks";
-import TasksItem from "../components/TasksItem";
+import NoteItem from "../components/NoteItem";
 import AddButton from "../components/AddButton";
 
 const TabTwoScreen = observer(
@@ -37,7 +37,7 @@ const TabTwoScreen = observer(
         <FlatList
           data={notesStore.notes}
           renderItem={({ item }) => (
-            <TasksItem id={item.id} title={item.title} onPress={selectNote} />
+            <NoteItem id={item.id} title={item.title} onPress={selectNote} />
           )}
           keyExtractor={(item) => item.id}
         />

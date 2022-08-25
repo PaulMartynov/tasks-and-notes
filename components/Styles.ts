@@ -37,7 +37,7 @@ export const noteStyles = StyleSheet.create({
     overflow: "hidden",
   },
   button: {
-    width: "45%",
+    width: "50%",
     paddingVertical: 10,
     paddingHorizontal: 30,
     justifyContent: "center",
@@ -46,6 +46,5 @@ export const noteStyles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: "#365d91",
-    width: "55%",
   },
 });

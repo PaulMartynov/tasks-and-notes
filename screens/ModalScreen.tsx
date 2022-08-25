@@ -6,8 +6,8 @@ import { Text, View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 import notes from "../store/notes";
 import tasks from "../store/tasks";
-import { MonoText } from "../components/StyledText";
 import NoteView from "../components/NoteView";
+import TaskView from "../components/TaskView";
 
 const ModalScreen = observer(({ navigation }: RootTabScreenProps<"Modal">) => {
   const saveNote = (note: Note) => {
@@ -18,23 +18,23 @@ const ModalScreen = observer(({ navigation }: RootTabScreenProps<"Modal">) => {
     notes.deleteNote(id);
     navigation.navigate("TabTwo");
   };
+
+  const saveTask = (task: Task) => {
+    tasks.updateTask(task);
+    navigation.navigate("TabOne");
+  };
+  const deleteTask = (id: string) => {
+    tasks.deleteTask(id);
+    navigation.navigate("TabOne");
+  };
+
   return (
     <View style={styles.container}>
       {notes.activeNote && (
         <NoteView note={notes.activeNote} save={saveNote} remove={deleteNote} />
       )}
       {tasks.activeTask && (
-        <>
-          <View style={styles.subtitle}>
-            <MonoText>{`#${tasks.activeTask.id}`}</MonoText>
-          </View>
-          <Text style={styles.title}>{tasks.activeTask.title}</Text>
-          <View
-            style={styles.separator}
-            lightColor="#eee"
-            darkColor="rgba(255,255,255,0.1)"
-          />
-        </>
+        <TaskView task={tasks.activeTask} save={saveTask} remove={deleteTask} />
       )}
       {!notes.activeNote && !tasks.activeTask && (
         <>

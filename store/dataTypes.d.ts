@@ -5,11 +5,12 @@ interface ListItem {
 
 interface TaskItem {
   name: string;
-  done: boolean;
+  checked: boolean;
 }
 
 interface Task extends ListItem {
   checkList: TaskItem[];
+  completed: boolean;
 }
 
 interface Note extends ListItem {
