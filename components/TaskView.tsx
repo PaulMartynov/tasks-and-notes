@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Pressable, TextInput, Alert, FlatList } from "react-native";
 import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
-import { View, Text } from "./common/Themed";
+import { View } from "./common/Themed";
 import { MonoText } from "./common/StyledText";
 import { noteStyles } from "./Styles";
-import CheckBox from "./common/CheckBox";
 import CheckItem from "./CheckItem";
 
 type TaskViewProps = {
