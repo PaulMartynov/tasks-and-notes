@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { Platform, StyleSheet } from "react-native";
 import { observer } from "mobx-react-lite";
 
-import { Text, View } from "../components/Themed";
+import { Text, View } from "../components/common/Themed";
 import { RootTabScreenProps } from "../types";
 import notes from "../store/notes";
 import tasks from "../store/tasks";

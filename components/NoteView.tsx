@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Pressable, TextInput } from "react-native";
+import { Alert, Pressable, TextInput } from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
-import { View } from "./Themed";
-import { MonoText } from "./StyledText";
+import { View } from "./common/Themed";
+import { MonoText } from "./common/StyledText";
 import { noteStyles } from "./Styles";
 
 type NoteViewProps = {
@@ -21,6 +21,15 @@ export default function NoteView({
 
   const saveChanges = () => {
     save({ ...note, title, text });
+  };
+  const deleteNote = () => {
+    Alert.alert("Confirm", "Delete this note?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => remove(note.id) },
+    ]);
   };
 
   return (
@@ -65,7 +74,7 @@ export default function NoteView({
             ...noteStyles.button,
             opacity: pressed ? 0.75 : 1,
           })}
-          onPress={() => remove(note.id)}
+          onPress={deleteNote}
         >
           <AntDesign name="delete" size={36} color="#fff" />
         </Pressable>

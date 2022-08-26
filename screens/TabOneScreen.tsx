@@ -1,24 +1,21 @@
-import { FlatList } from "react-native";
+import { Alert, FlatList } from "react-native";
 import { observer } from "mobx-react-lite";
 
 import * as React from "react";
-import { View } from "../components/Themed";
+import { View } from "../components/common/Themed";
 import { RootTabScreenProps } from "../types";
 import { TabStyles } from "./ScreenStyles";
 import tasksStore from "../store/tasks";
 import notesStore from "../store/notes";
-import NoteItem from "../components/NoteItem";
 import AddButton from "../components/AddButton";
+import TaskItem from "../components/TaskItem";
 
 const TabOneScreen = observer(
   ({ navigation }: RootTabScreenProps<"TabOne">) => {
-    const selectTask = (id: string) => {
-      const task = tasksStore.tasks.find((t) => t.id === id);
-      if (task) {
-        notesStore.setActiveNote(null);
-        tasksStore.setActiveTask(task);
-        navigation.navigate("Modal");
-      }
+    const selectTask = (task: Task) => {
+      notesStore.setActiveNote(null);
+      tasksStore.setActiveTask(task);
+      navigation.navigate("Modal");
     };
     const addTask = () => {
       notesStore.setActiveNote(null);
@@ -33,12 +30,35 @@ const TabOneScreen = observer(
       );
       navigation.navigate("Modal");
     };
+    const completeTask = (task: Task) => {
+      Alert.alert("Action", "What to do with this task?", [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: () => tasksStore.deleteTask(task.id),
+        },
+        {
+          text: task.completed ? "uncompleted" : "Complete",
+          onPress: () =>
+            tasksStore.updateTask({ ...task, completed: !task.completed }),
+        },
+      ]);
+    };
+
     return (
       <View style={TabStyles.container}>
         <FlatList
           data={tasksStore.tasks}
           renderItem={({ item }) => (
-            <NoteItem id={item.id} title={item.title} onPress={selectTask} />
+            <TaskItem
+              task={item}
+              onPress={selectTask}
+              onLongPress={completeTask}
+            />
           )}
           keyExtractor={(item) => item.id}
         />

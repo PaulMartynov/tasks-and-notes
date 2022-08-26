@@ -33,6 +33,7 @@ class Notes {
   deleteNote(id: string) {
     if (this.isNew) {
       this.activeNote = null;
+      this.isNew = false;
       return;
     }
     this.notes = this.notes.filter((n) => n.id !== id);

@@ -2,7 +2,11 @@ import { StyleSheet } from "react-native";
 
 export const noteStyles = StyleSheet.create({
   title: {
-    padding: 20,
+    marginTop: 20,
+    paddingBottom: 5,
+    marginHorizontal: 30,
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
     textAlign: "center",
     fontSize: 20,
     fontWeight: "bold",
@@ -46,5 +50,57 @@ export const noteStyles = StyleSheet.create({
   },
   saveButton: {
     backgroundColor: "#365d91",
+  },
+  chekListAdd: {
+    flexDirection: "row",
+    paddingVertical: 5,
+    paddingHorizontal: 20,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  chekListInput: {
+    fontSize: 18,
+    width: "85%",
+    borderBottomWidth: 1,
+    borderBottomColor: "gray",
+    marginRight: 5,
+    backgroundColor: "#eee",
+  },
+  chekListBtn: {
+    backgroundColor: "#30ad54",
+    borderRadius: 3,
+    height: 36,
+    width: 48,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+export const listItemStyles = StyleSheet.create({
+  itemContainer: {
+    backgroundColor: "#fff",
+    justifyContent: "center",
+    padding: 10,
+    height: 72,
+    marginVertical: 2,
+    marginHorizontal: 2,
+    borderWidth: 1,
+    borderColor: "gray",
+    borderStyle: "solid",
+    borderRadius: 3,
+    overflow: "hidden",
+  },
+  itemText: {
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  checkedText: {
+    fontWeight: "bold",
+    fontStyle: "italic",
+    textDecorationLine: "line-through",
+    textDecorationStyle: "solid",
+    fontSize: 18,
+    color: "gray",
   },
 });

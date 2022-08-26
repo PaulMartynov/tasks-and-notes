@@ -1,9 +1,10 @@
-import { Pressable, StyleSheet } from "react-native";
+import { Pressable } from "react-native";
 
 import React from "react";
-import { Text } from "./Themed";
+import { Text } from "./common/Themed";
+import { listItemStyles } from "./Styles";
 
-type TasksItemProps = {
+type NoteItemProps = {
   id: string;
   title: string;
   onPress: (id: string) => void;
@@ -13,7 +14,7 @@ export default function NoteItem({
   id,
   title,
   onPress,
-}: TasksItemProps): JSX.Element {
+}: NoteItemProps): JSX.Element {
   const selectItem = () => {
     onPress(id);
   };
@@ -21,31 +22,11 @@ export default function NoteItem({
     <Pressable
       onPress={selectItem}
       style={({ pressed }) => ({
-        ...styles.itemContainer,
+        ...listItemStyles.itemContainer,
         opacity: pressed ? 0.5 : 1,
       })}
     >
-      <Text style={styles.itemText}>{`${title}`}</Text>
+      <Text style={listItemStyles.itemText}>{`${title}`}</Text>
     </Pressable>
   );
 }
-
-const styles = StyleSheet.create({
-  itemContainer: {
-    backgroundColor: "#fff",
-    justifyContent: "center",
-    padding: 10,
-    height: 72,
-    marginVertical: 2,
-    marginHorizontal: 2,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderStyle: "solid",
-    borderRadius: 3,
-    overflow: "hidden",
-  },
-  itemText: {
-    fontWeight: "bold",
-    fontSize: 18,
-  },
-});

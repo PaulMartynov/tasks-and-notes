@@ -2,7 +2,7 @@ import { FlatList } from "react-native";
 import { observer } from "mobx-react-lite";
 
 import * as React from "react";
-import { View } from "../components/Themed";
+import { View } from "../components/common/Themed";
 import { RootTabScreenProps } from "../types";
 import { TabStyles } from "./ScreenStyles";
 import notesStore from "../store/notes";

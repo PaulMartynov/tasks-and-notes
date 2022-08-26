@@ -20,9 +20,15 @@ class Tasks {
   updateTask(task: Task) {
     if (this.isNew) {
       this.tasks = [task, ...this.tasks];
+      this.isNew = false;
       return;
     }
-    this.tasks = [task, ...this.tasks.filter((t) => t.id !== task.id)];
+    this.tasks = this.tasks.map((t) => {
+      if (t.id === task.id) {
+        return task;
+      }
+      return t;
+    });
   }
 
   setActiveTask(task: Task | null, isNew = false) {
