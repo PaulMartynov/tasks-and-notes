@@ -79,8 +79,10 @@ export const noteStyles = StyleSheet.create({
 
 export const listItemStyles = StyleSheet.create({
   itemContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     backgroundColor: "#fff",
-    justifyContent: "center",
+    justifyContent: "space-between",
     padding: 10,
     height: 72,
     marginVertical: 2,
@@ -92,15 +94,23 @@ export const listItemStyles = StyleSheet.create({
     overflow: "hidden",
   },
   itemText: {
+    width: "85%",
     fontWeight: "bold",
     fontSize: 18,
+    overflow: "hidden",
   },
   checkedText: {
+    width: "85%",
     fontWeight: "bold",
     fontStyle: "italic",
     textDecorationLine: "line-through",
     textDecorationStyle: "solid",
     fontSize: 18,
     color: "gray",
+    overflow: "hidden",
+  },
+  tasksCompleted: {
+    paddingHorizontal: 10,
+    overflow: "hidden",
   },
 });

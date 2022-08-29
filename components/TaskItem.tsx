@@ -32,6 +32,9 @@ export default function TaskItem({
       >
         {task.title}
       </Text>
+      <Text style={listItemStyles.tasksCompleted}>{`${
+        task.checkList.filter((t) => t.checked).length
+      }/${task.checkList.length}`}</Text>
     </Pressable>
   );
 }

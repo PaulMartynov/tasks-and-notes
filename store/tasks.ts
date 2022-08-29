@@ -1,26 +1,48 @@
-import { makeObservable, observable, action } from "mobx";
+import { makeObservable, observable, action, toJS } from "mobx";
 
 class Tasks {
   isNew = false;
+
+  filterText = "";
 
   activeTask: Task | null = null;
 
   tasks: Task[] = [];
 
+  currentTasks: Task[] = [];
+
   constructor() {
     makeObservable(this, {
       activeTask: observable,
-      tasks: observable,
+      currentTasks: observable,
       updateTask: action,
       setActiveTask: action,
       deleteTask: action,
+      setFilterText: action,
     });
+  }
+
+  filterTask() {
+    if (!this.filterText.trim()) {
+      this.currentTasks = this.tasks;
+      return;
+    }
+    const text = this.filterText.toLowerCase();
+    this.currentTasks = this.tasks.filter((t) =>
+      t.title.toLowerCase().includes(text)
+    );
+  }
+
+  setFilterText(text: string) {
+    this.filterText = text;
+    this.filterTask();
   }
 
   updateTask(task: Task) {
     if (this.isNew) {
       this.tasks = [task, ...this.tasks];
       this.isNew = false;
+      this.filterTask();
       return;
     }
     this.tasks = this.tasks.map((t) => {
@@ -29,6 +51,7 @@ class Tasks {
       }
       return t;
     });
+    this.filterTask();
   }
 
   setActiveTask(task: Task | null, isNew = false) {
@@ -38,6 +61,7 @@ class Tasks {
 
   deleteTask(id: string) {
     this.tasks = this.tasks.filter((t) => t.id !== id);
+    this.filterTask();
   }
 }
 

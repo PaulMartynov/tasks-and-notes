@@ -52,12 +52,14 @@ const styles = StyleSheet.create({
   itemText: {
     textAlign: "center",
     fontSize: 16,
+    overflow: "hidden",
   },
   itemTextChecked: {
     textAlign: "center",
     fontSize: 16,
     fontStyle: "italic",
     textDecorationLine: "line-through",
+    overflow: "hidden",
   },
   itemDelete: {
     justifyContent: "center",

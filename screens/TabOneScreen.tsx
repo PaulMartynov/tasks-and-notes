@@ -9,6 +9,7 @@ import tasksStore from "../store/tasks";
 import notesStore from "../store/notes";
 import AddButton from "../components/AddButton";
 import TaskItem from "../components/TaskItem";
+import FilterInput from "../components/common/FilterInput";
 
 const TabOneScreen = observer(
   ({ navigation }: RootTabScreenProps<"TabOne">) => {
@@ -51,8 +52,9 @@ const TabOneScreen = observer(
 
     return (
       <View style={TabStyles.container}>
+        <FilterInput onChangeText={(t) => tasksStore.setFilterText(t)} />
         <FlatList
-          data={tasksStore.tasks}
+          data={tasksStore.currentTasks}
           renderItem={({ item }) => (
             <TaskItem
               task={item}

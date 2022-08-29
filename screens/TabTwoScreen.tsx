@@ -9,6 +9,7 @@ import notesStore from "../store/notes";
 import tasksStore from "../store/tasks";
 import NoteItem from "../components/NoteItem";
 import AddButton from "../components/AddButton";
+import FilterInput from "../components/common/FilterInput";
 
 const TabTwoScreen = observer(
   ({ navigation }: RootTabScreenProps<"TabOne">) => {
@@ -34,8 +35,9 @@ const TabTwoScreen = observer(
     };
     return (
       <View style={TabStyles.container}>
+        <FilterInput onChangeText={(t) => notesStore.setFilterText(t)} />
         <FlatList
-          data={notesStore.notes}
+          data={notesStore.currentNotes}
           renderItem={({ item }) => (
             <NoteItem id={item.id} title={item.title} onPress={selectNote} />
           )}

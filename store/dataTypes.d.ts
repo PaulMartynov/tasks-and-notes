@@ -4,6 +4,7 @@ interface ListItem {
 }
 
 interface TaskItem {
+  id: string;
   name: string;
   checked: boolean;
 }

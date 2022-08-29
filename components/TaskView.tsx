@@ -20,9 +20,10 @@ export default function TaskView({
   const [title, setTitle] = useState(task.title);
   const [checkItemText, setCheckItemText] = useState("");
   const [checkList, setCheckList] = useState(task.checkList);
+  const [completed, setCompleted] = useState(task.completed);
 
   const saveChanges = () => {
-    save({ ...task, title });
+    save({ ...task, title, checkList, completed });
   };
   const deleteTask = () => {
     Alert.alert("Confirm", "Delete this task?", [
@@ -35,26 +36,38 @@ export default function TaskView({
   };
 
   const addCheckItem = () => {
-    if (checkItemText.trim()) {
-      setCheckList([...checkList, { name: checkItemText, checked: false }]);
+    if (!checkItemText.trim()) {
+      return;
+    }
+    if (checkItemText.includes("\n")) {
+      const list: TaskItem[] = [];
+      checkItemText.split("\n").forEach((st, i) => {
+        list.push({ id: `${Date.now()}${i}`, name: st, checked: false });
+      });
+      setCheckList([...checkList, ...list]);
       setCheckItemText("");
+      return;
     }
+    setCheckList([
+      ...checkList,
+      { id: `${Date.now()}`, name: checkItemText, checked: false },
+    ]);
+    setCheckItemText("");
   };
 
-  const deleteItem = (id: number) => {
-    if (checkList[id]) {
-      const list = [...checkList];
-      list.splice(id, 1);
-      setCheckList(list);
-    }
+  const deleteItem = (id: string) => {
+    setCheckList(checkList.filter((ch) => ch.id !== id));
   };
 
-  const checkItem = (id: number) => {
-    if (checkList[id]) {
-      const list = [...checkList];
-      list[id] = { ...list[id], checked: !list[id].checked };
-      setCheckList(list);
-    }
+  const checkItem = (id: string) => {
+    setCheckList(
+      checkList.map((ch) => {
+        if (ch.id === id) {
+          return { ...ch, checked: !ch.checked };
+        }
+        return ch;
+      })
+    );
   };
 
   return (
@@ -93,14 +106,14 @@ export default function TaskView({
         <FlatList
           style={{ backgroundColor: "#eee" }}
           data={checkList}
-          renderItem={({ item, index }) => (
+          renderItem={({ item }) => (
             <CheckItem
-              toggle={() => checkItem(index)}
+              toggle={() => checkItem(item.id)}
               item={item}
-              remove={() => deleteItem(index)}
+              remove={() => deleteItem(item.id)}
             />
           )}
-          keyExtractor={(item, i) => `${item.name}-${i}`}
+          keyExtractor={(item) => `check-${item.id}`}
         />
       </View>
       <View style={noteStyles.buttonsContainer}>

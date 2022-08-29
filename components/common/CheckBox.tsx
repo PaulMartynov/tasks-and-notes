@@ -33,8 +33,8 @@ export default function CheckBox(props: CheckBoxProps): JSX.Element {
 
 const styles = StyleSheet.create({
   boxContainer: {
-    flex: 1,
     flexDirection: "row",
+    flex: 1,
     alignItems: "center",
   },
   boxStyle: {
