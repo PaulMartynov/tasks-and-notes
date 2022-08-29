@@ -40,7 +40,7 @@ export default function CheckItem({
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
-    marginVertical: 3,
+    marginTop: 3,
     marginHorizontal: 5,
     paddingVertical: 8,
     paddingHorizontal: 10,

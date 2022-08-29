@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Pressable, TextInput, Alert, FlatList } from "react-native";
 import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
-import { View } from "./common/Themed";
+import { Text, View } from "./common/Themed";
 import { MonoText } from "./common/StyledText";
 import { noteStyles } from "./Styles";
 import CheckItem from "./CheckItem";
@@ -74,6 +74,20 @@ export default function TaskView({
     <>
       <View style={noteStyles.subtitle}>
         <MonoText>{`#${task.id}`}</MonoText>
+      </View>
+      <View style={noteStyles.completeBox}>
+        <Pressable
+          style={({ pressed }) => ({
+            ...noteStyles.completeBtn,
+            opacity: pressed ? 0.75 : 1,
+            backgroundColor: completed ? "#30ad54" : "#dcb91c",
+          })}
+          onPress={() => setCompleted(!completed)}
+        >
+          <Text style={noteStyles.completeBtnText}>
+            {completed ? "completed" : "not completed"}
+          </Text>
+        </Pressable>
       </View>
       <TextInput
         style={noteStyles.title}

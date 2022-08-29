@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, toJS } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 
 class Tasks {
   isNew = false;
