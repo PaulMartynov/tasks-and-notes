@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Pressable, TextInput, Alert, FlatList } from "react-native";
 import { AntDesign, Entypo, FontAwesome } from "@expo/vector-icons";
 import { Text, View } from "./common/Themed";
-import { MonoText } from "./common/StyledText";
 import { noteStyles } from "./Styles";
 import CheckItem from "./CheckItem";
 
@@ -42,7 +41,9 @@ export default function TaskView({
     if (checkItemText.includes("\n")) {
       const list: TaskItem[] = [];
       checkItemText.split("\n").forEach((st, i) => {
-        list.push({ id: `${Date.now()}${i}`, name: st, checked: false });
+        if (st.trim()) {
+          list.push({ id: `${Date.now()}${i}`, name: st, checked: false });
+        }
       });
       setCheckList([...checkList, ...list]);
       setCheckItemText("");
@@ -72,9 +73,6 @@ export default function TaskView({
 
   return (
     <>
-      <View style={noteStyles.subtitle}>
-        <MonoText>{`#${task.id}`}</MonoText>
-      </View>
       <View style={noteStyles.completeBox}>
         <Pressable
           style={({ pressed }) => ({
@@ -118,7 +116,7 @@ export default function TaskView({
           </Pressable>
         </View>
         <FlatList
-          style={{ backgroundColor: "#eee" }}
+          style={{ backgroundColor: "#eee", paddingTop: 3 }}
           data={checkList}
           renderItem={({ item }) => (
             <CheckItem
@@ -139,7 +137,7 @@ export default function TaskView({
           })}
           onPress={saveChanges}
         >
-          <FontAwesome name="save" size={36} color="#fff" />
+          <FontAwesome name="save" size={30} color="#fff" />
         </Pressable>
         <Pressable
           style={({ pressed }) => ({
@@ -148,7 +146,7 @@ export default function TaskView({
           })}
           onPress={deleteTask}
         >
-          <AntDesign name="delete" size={36} color="#fff" />
+          <AntDesign name="delete" size={30} color="#fff" />
         </Pressable>
       </View>
     </>

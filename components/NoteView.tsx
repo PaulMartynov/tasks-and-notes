@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Alert, Pressable, TextInput } from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { View } from "./common/Themed";
-import { MonoText } from "./common/StyledText";
 import { noteStyles } from "./Styles";
 
 type NoteViewProps = {
@@ -34,9 +33,6 @@ export default function NoteView({
 
   return (
     <>
-      <View style={noteStyles.subtitle}>
-        <MonoText>{`#${note.id}`}</MonoText>
-      </View>
       <TextInput
         style={noteStyles.title}
         value={title}
@@ -67,7 +63,7 @@ export default function NoteView({
           })}
           onPress={saveChanges}
         >
-          <FontAwesome name="save" size={36} color="#fff" />
+          <FontAwesome name="save" size={30} color="#fff" />
         </Pressable>
         <Pressable
           style={({ pressed }) => ({
@@ -76,7 +72,7 @@ export default function NoteView({
           })}
           onPress={deleteNote}
         >
-          <AntDesign name="delete" size={36} color="#fff" />
+          <AntDesign name="delete" size={30} color="#fff" />
         </Pressable>
       </View>
     </>

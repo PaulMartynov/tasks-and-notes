@@ -14,19 +14,24 @@ type CheckBoxProps = {
 export default function CheckBox(props: CheckBoxProps): JSX.Element {
   return (
     <View style={styles.boxContainer}>
-      <Pressable
-        style={{
-          ...styles.boxStyle,
-          width: props.boxSize,
-          height: props.boxSize,
-        }}
-        onPress={props.toggle}
-      >
-        {props.checked && (
-          <FontAwesome5 name="check" size={props.boxSize - 8} color="#3c3c3c" />
-        )}
+      <Pressable onPress={props.toggle} style={{ flexDirection: "row" }}>
+        <View
+          style={{
+            ...styles.boxStyle,
+            width: props.boxSize,
+            height: props.boxSize,
+          }}
+        >
+          {props.checked && (
+            <FontAwesome5
+              name="check"
+              size={props.boxSize - 8}
+              color="#3c3c3c"
+            />
+          )}
+        </View>
+        {props.label && <Text style={props.textStyle}>{props.label}</Text>}
       </Pressable>
-      {props.label && <Text style={props.textStyle}>{props.label}</Text>}
     </View>
   );
 }

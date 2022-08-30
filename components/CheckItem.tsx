@@ -1,6 +1,6 @@
 import React from "react";
 import { Pressable, StyleSheet } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import CheckBox from "./common/CheckBox";
 import { View } from "./common/Themed";
 
@@ -18,7 +18,7 @@ export default function CheckItem({
   return (
     <View style={styles.itemContainer}>
       <CheckBox
-        boxSize={24}
+        boxSize={26}
         checked={item.checked}
         label={item.name}
         textStyle={item.checked ? styles.itemTextChecked : styles.itemText}
@@ -31,7 +31,7 @@ export default function CheckItem({
         })}
         onPress={() => remove()}
       >
-        <FontAwesome name="close" size={24} color="#fff" />
+        <Ionicons name="close" size={30} color="black" />
       </Pressable>
     </View>
   );
@@ -40,7 +40,7 @@ export default function CheckItem({
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
-    marginTop: 3,
+    marginBottom: 3,
     marginHorizontal: 5,
     paddingVertical: 8,
     paddingHorizontal: 10,
@@ -51,12 +51,12 @@ const styles = StyleSheet.create({
   },
   itemText: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
     overflow: "hidden",
   },
   itemTextChecked: {
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 18,
     fontStyle: "italic",
     textDecorationLine: "line-through",
     overflow: "hidden",
@@ -64,9 +64,7 @@ const styles = StyleSheet.create({
   itemDelete: {
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#b93f3f",
-    width: 36,
-    height: 36,
-    borderRadius: 100,
+    width: 30,
+    height: 30,
   },
 });
