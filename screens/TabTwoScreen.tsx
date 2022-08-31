@@ -28,6 +28,7 @@ const TabTwoScreen = observer(
           id: `${Date.now()}`,
           title: "New note",
           text: "",
+          categoryId: 0,
         },
         true
       );

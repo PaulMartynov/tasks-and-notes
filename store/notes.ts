@@ -1,4 +1,6 @@
 import { makeObservable, observable, action } from "mobx";
+import { SQLError, SQLTransaction } from "expo-sqlite";
+import database from "../database/database";
 
 class Notes {
   isNew = false;
@@ -11,6 +13,8 @@ class Notes {
 
   currentNotes: Note[] = [];
 
+  error = "";
+
   constructor() {
     makeObservable(this, {
       activeNote: observable,
@@ -19,16 +23,38 @@ class Notes {
       setActiveNote: action,
       deleteNote: action,
       setFilterText: action,
+      filterNotes: action,
+    });
+    this.fetchNotes();
+  }
+
+  onError(txObj: SQLTransaction, error: SQLError) {
+    this.error = error.message;
+    console.log("Error ", error);
+    return true;
+  }
+
+  fetchNotes() {
+    database.db?.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM notes ORDER BY id DESC",
+        undefined,
+        (txObj, { rows: { _array } }) => {
+          this.notes = _array;
+          this.filterNotes(_array);
+        },
+        this.onError
+      );
     });
   }
 
-  filterNotes() {
+  filterNotes(notes: Note[]) {
     if (!this.filterText.trim()) {
-      this.currentNotes = this.notes;
+      this.currentNotes = notes;
       return;
     }
     const text = this.filterText.toLowerCase();
-    this.currentNotes = this.notes.filter(
+    this.currentNotes = notes.filter(
       (t) =>
         t.title.toLowerCase().includes(text) ||
         t.text.toLowerCase().includes(text)
@@ -37,17 +63,35 @@ class Notes {
 
   setFilterText(text: string) {
     this.filterText = text;
-    this.filterNotes();
+    this.filterNotes(this.notes);
   }
 
   updateNote(note: Note) {
+    const { id, title, text, categoryId } = note;
     if (this.isNew) {
-      this.notes = [note, ...this.notes];
-      this.filterNotes();
+      database.db?.transaction((tx) => {
+        tx.executeSql(
+          "INSERT INTO notes (id, title, text, category_id) values (?, ?, ?, ?)",
+          [id, title, text, categoryId],
+          () => {
+            this.isNew = false;
+            this.fetchNotes();
+          },
+          this.onError
+        );
+      });
       return;
     }
-    this.notes = [note, ...this.notes.filter((n) => n.id !== note.id)];
-    this.filterNotes();
+    database.db?.transaction((tx) => {
+      tx.executeSql(
+        `UPDATE notes SET title='${title}', text='${text}', category_id='${categoryId}' WHERE id='${id}'`,
+        undefined,
+        () => {
+          this.fetchNotes();
+        },
+        this.onError
+      );
+    });
   }
 
   setActiveNote(note: Note | null, isNew = false) {
@@ -61,8 +105,16 @@ class Notes {
       this.isNew = false;
       return;
     }
-    this.notes = this.notes.filter((n) => n.id !== id);
-    this.filterNotes();
+    database.db?.transaction((tx) => {
+      tx.executeSql(
+        `DELETE FROM notes WHERE id='${id}'`,
+        undefined,
+        () => {
+          this.fetchNotes();
+        },
+        this.onError
+      );
+    });
   }
 }
 

@@ -1,6 +1,7 @@
 interface ListItem {
   id: string;
   title: string;
+  categoryId: number;
 }
 
 interface TaskItem {

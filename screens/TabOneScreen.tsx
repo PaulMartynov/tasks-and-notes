@@ -26,6 +26,7 @@ const TabOneScreen = observer(
           title: "New task",
           checkList: [],
           completed: false,
+          categoryId: 0,
         },
         true
       );
